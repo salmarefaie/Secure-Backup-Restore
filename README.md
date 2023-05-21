@@ -34,9 +34,33 @@ should be copied to a remote server. The restore script should work in a reverse
 - We loop over the files stored in the temp directory and extract them one by one under the restore directory.
 
 
-
-
-
+ ### how to run project:
+ - At first, Download gnup tool if it doesn't exist
+ ```bash
+    sudo apt install gnupg
+ ```
+ - 
+ - Then, clone the project
+  ```bash
+     https://github.com/salmarefaie/Secure-Backup-Restore.git
+  ``` 
+ - Add downloaded folder in ~/.bashrc by vi
+  ```bash
+     export PATH=$PATH:$HOME/DevOps/Secure-Backup-Restore
+  ``` 
+ - excute all scripts
+ ```bash
+    chmod +x backup.sh
+    chmod +x restore.sh
+  ``` 
+ - To run the backup
+   ```bash
+     . ./backup.sh
+   ``` 
+ - To run the restore
+   ```bash
+    . ./restore.sh
+   ``` 
 
 
 
