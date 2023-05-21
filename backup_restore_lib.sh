@@ -168,7 +168,7 @@ backup(){
    echo " ------------------------------------------- "
 
    # excute backup script every day at midnight
-   echo "0 0 * * * /home/salma/DevOps/Secure-Backup-Restore/backup.sh" $target_directory $backup_directory $encryption $days > /tmp/new_crontab
+   echo "0 0 * * * /home/salma/DevOps/Secure-Backup-Restore/backup.sh" $target_directory $backup_directory $encryption_key $days > /tmp/new_crontab
    crontab /tmp/new_crontab
    rm /tmp/new_crontab
 }
