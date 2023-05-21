@@ -39,7 +39,6 @@ should be copied to a remote server. The restore script should work in a reverse
  ```bash
     sudo apt install gnupg
  ```
- - 
  - Then, clone the project
   ```bash
      https://github.com/salmarefaie/Secure-Backup-Restore.git
@@ -54,13 +53,13 @@ should be copied to a remote server. The restore script should work in a reverse
     chmod +x restore.sh
   ``` 
  - To run the backup
-   ```bash
-     . ./backup.sh
-   ``` 
+ ```bash
+    . ./backup.sh
+ ``` 
  - To run the restore
-   ```bash
+ ```bash
     . ./restore.sh
-   ``` 
+ ``` 
 
 
 
