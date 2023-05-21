@@ -94,28 +94,39 @@ validate_backup_params(){
 
 
 backup(){
-   
+
    # create dir in backup dir, dir name is date
    LANG=en_us_88591
-   date=`date +"%d %b %Y %H:%M:%S" | sed 's/[:" "]/_/g'`
-   mkdir $HOME/$backup_directory/$date
-   backup_date_directory=$HOME/$backup_directory/$date
-   
+   date=$(date +"%d %b %Y %H:%M:%S" | sed 's/[:" "]/_/g')
+   date_seconds=$(date +%s)
 
-   # backup folders and files in target directory
-   for item in "$HOME/$target_directory"/*
-   do
-    if [ -d $item ]
-    then
-      directory_name=$(basename $item)  
-      tar -czf "$backup_date_directory/$directory_name-$date.tgz" -C "$HOME/$target_directory" "$directory_name" 
-    elif [ -f $item ]
-    then
-      file_name=$(basename $item)  
-      tar -czf "$backup_date_directory/$file_name-$date.tgz" -C "$HOME/$target_directory" "$file_name"  
-    fi
-   done
+   mkdir -p "$HOME/$backup_directory/$date"
+   backup_date_directory="$HOME/$backup_directory/$date"
 
+   # backup modified files in target directory
+   loop_all_directories() {
+      local directory="$1"
+      local item
+
+      for item in "$directory"/*
+      do
+         if [ -f "$item" ]
+         then
+            last_modified_date=$(stat -c %Y "$item")
+            last_modified_days=$(( (date_seconds - last_modified_date) / (60 * 60 * 24) ))
+
+            if [ "$last_modified_days" -le "$days" ]
+            then
+               tar -czf "$backup_date_directory/$(basename "$item")-$date.tgz" -C "$HOME/$target_directory" "$(basename "$item")"
+            fi
+         elif [ -d "$item" ]
+         then
+            loop_all_directories "$item"
+         fi
+      done
+   }
+
+   loop_all_directories "$HOME/$target_directory"
 
    # encrypt zip files in backup date directoy
    for zip in "$backup_date_directory"/*
@@ -125,8 +136,16 @@ backup(){
      rm $zip
    done
 
-   
-} 
+   for file in "$backup_date_directory"/*
+   do 
+    if [ ! -f "$HOME/$backup_directory/files-$date.tar" ]
+    then
+      tar -cf "$HOME/$backup_directory/files-$date.tar" -C "$backup_date_directory" "$(basename "$file")"
+    else
+      tar -uf "$HOME/$backup_directory/files-$date.tar" -C "$backup_date_directory" "$(basename "$file")"
+    fi
+   done
+}
 
 
 
