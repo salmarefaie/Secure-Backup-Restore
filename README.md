@@ -12,7 +12,7 @@ should be copied to a remote server. The restore script should work in a reverse
  
 ## Functionality
  ### Backup.sh:
- - User should enter 4 parameters for validate_backup_params function. The first parameter is the directory to be backed up, the second parameter is the directory which should store the backup,    the third parameter is an encryption key that you should use to encrypt your backup and the fourth parameter is number of days to backup only the changed files during the days.
+ - User should enter 4 parameters for validate_backup_params function. The first parameter is the directory to be backed up, the second parameter is the directory which should store the backup, the third parameter is an encryption key that you should use to encrypt your backup and the fourth parameter is number of days to backup only the changed files during the days.
 
 
 
